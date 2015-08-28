@@ -37,8 +37,8 @@ class Shortcut
     /**
      * A better way to check if array cells are defined.
      *
-     * @param Array $array - the array you want to test
-     * @param Array $children - all the cells keys you want to test by order
+     * @param array $array - the array you want to test
+     * @param array $children - all the cells keys you want to test by order
      *
      * @return bool
      */
