@@ -271,11 +271,11 @@ class Shortcut
             $patterns = array($patterns);
         }
 
-        $patterns = array_map(function ($n) use ($path) {
+        $includes = array_map(function ($n) use ($path) {
             return $path . '/' . $n;
         }, $patterns);
 
-        foreach ($patterns as $pattern) {
+        foreach ($includes as $pattern) {
             $files = glob($pattern);
             foreach ($files as $file) {
                 require_once $file;
