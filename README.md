@@ -154,6 +154,9 @@ public function getPage() {
 
 Allows you to check multible cells at once
 
+`$array` any array
+`$children` an array of potential cells
+
 ```php
 
 $response = Api::request('user/1/photos');
