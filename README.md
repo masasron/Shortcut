@@ -188,7 +188,7 @@ public function getPage() {
 
 ```
 
-#### multiIsset
+##### multiIsset
 
 Allows you to check multible cells at once
 
