@@ -140,10 +140,21 @@ class Shortcut
      * Register plugin activation hook
      * @param string $file
      * @param mixed $callback
-     * @return Swift
+     * @return Shortcut
      */
     public function activated($callback) {
         register_activation_hook($this->path, $this->fetchCallback($callback));
+        return $this;
+    }
+
+    /**
+     * Register plugin deactivation hook
+     * @param string $file
+     * @param mixed $callback
+     * @return Shortcut
+     */
+    public function deactivated($callback) {
+        register_deactivation_hook($this->path, $this->fetchCallback($callback));
         return $this;
     }
 
