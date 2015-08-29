@@ -109,4 +109,43 @@ public function templateRedirect(){
 }
 ```
 
+### Helpers
 
+##### updateOptions
+
+Allows you to quickly save options to the database.
+`$options` an array of key value options usually the request.
+`$whitelist` an array of values to function will try to create options for.
+`$prefix` a prefix string that will be used for each option, default is an empty string.
+
+```php
+
+//TestController.php
+
+public function postPage() {
+    // ...
+    $whitelist = ['website_public','website_secret'];
+    $this->shortcut->updateOptions($this->post,$whitelist);
+    // ...
+}
+
+```
+
+##### getOptions
+
+Allows you quickly get an array of key value pers of a given list.
+
+`$options` an array of option keys.
+`$prefix` a prefix string for each option, default is an empty string.
+
+```php
+
+//TestController.php
+
+public function getPage() {
+    // ...
+    $options = $this->shortcut->getOptions(['website_public','website_secret']);
+    return $this->view('settings',compact('options'));
+}
+
+```
