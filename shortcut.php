@@ -21,17 +21,17 @@ class Shortcut
      * @param array $dependencies
      * @return Shortcut
      */
-    public function __construct($path = '', $dependencies = false) {
-        /**
-         * @ver string
-         */
+    public function __construct($path = '') {
         $this->path = $path;
-
-        if ($dependencies) {
-            $this->requireAllOnce($dependencies, dirname($path));
-        }
-
         return $this;
+    }
+
+    /**
+     * @param string $path
+     * @return Shortcut
+     */
+    public static function plugin($path = '') {
+        return new static($path);
     }
 
     /**
@@ -270,7 +270,13 @@ class Shortcut
      * @param string $path
      * @return void
      */
-    public function requireAllOnce($patterns, $path) {
+    public function requireAll($patterns, $path = false) {
+
+        $plugin = $this;
+
+        if (!$path) {
+            $path = dirname($this->path);
+        }
 
         if (!is_array($patterns)) {
             $patterns = array($patterns);
