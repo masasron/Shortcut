@@ -1,11 +1,14 @@
 # Shortcut
 Object oriented WordPress development.
 
-
 ### Installation
 
 * Upload the entire `shortcut` folder to the `/wp-content/plugins/` directory.
 * Activate the plugin through the 'Plugins' menu in WordPress.
+
+### Plugins using Shortcut
+
+[Simple reCaptcha](https://github.com/masasron/Simple-reCaptcha)
 
 ### Working with Shortcut
 
