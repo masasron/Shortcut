@@ -65,6 +65,15 @@ $this->page(array(
 $this->filter('body_class',function ($classes){
     return array_merge($classes,['injected_class']);
 });
+
+// You can also use controller
+$this->action('template_redirect','TestController@filterBodyClasses');
+
+
+// TestController.php
+public function filterBodyClasses($classes){
+  return array_merge($classes,['injected_class']);
+}
 ```
 
 ##### Adding an action
@@ -73,6 +82,15 @@ $this->filter('body_class',function ($classes){
 $this->action('template_redirect',function (){
     // ...
 });
+
+// You can also use controller
+$this->action('template_redirect','TestController@templateRedirect');
+
+
+// TestController.php
+public function templateRedirect(){
+  // ...
+}
 ```
 
 
