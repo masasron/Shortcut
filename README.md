@@ -113,14 +113,6 @@ $this->page(array(
     'request.post' => 'TestController@postPage' // Runs on a post request to the page
 ));
 
-  if (!isset($args['parent'])) {
-            $args['parent'] = false;
-        }
-
-        if (!isset($args['capability'])) {
-            $args['capability'] = 'manage_options';
-        }
-
 ```
 
 ##### Adding a filter
