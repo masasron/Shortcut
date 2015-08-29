@@ -22,10 +22,10 @@ You can see an example for a controller on `demo/controllers/TestController.php`
 class TestContoller extends Controller {
 
     public function testing() {
-        $this->post; // $_POST
-        $this->get; // $_GET
-        $this->server; // $_SERVER
         $this->db; // $wpdb
+        $this->get; // $_GET
+        $this->post; // $_POST
+        $this->server; // $_SERVER
         $this->shortcut; // The current Shortcut object
     }
 
