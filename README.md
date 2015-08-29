@@ -107,10 +107,20 @@ Add a WordPress page
 ```php
 $this->page(array(
     'title' => 'Plugin Settings',
-    'parent' => 'options-general',
+    'parent' => 'options-general', // default `false`
+    'capability' => 'manage_options', // default `manage_options`
     'request.get' => 'TestController@getPage', // Runs on a get request to the page
     'request.post' => 'TestController@postPage' // Runs on a post request to the page
 ));
+
+  if (!isset($args['parent'])) {
+            $args['parent'] = false;
+        }
+
+        if (!isset($args['capability'])) {
+            $args['capability'] = 'manage_options';
+        }
+
 ```
 
 ##### Adding a filter
