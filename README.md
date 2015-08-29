@@ -17,6 +17,22 @@ We also have two folders `controllers` where all of your plugins controllers wil
 When creating a controller you need to extends the base controller named Controller.
 You can see an example for a controller on `demo/controllers/TestController.php`
 
+```php
+
+class TestContoller extends Controller {
+
+    public function testing() {
+        $this->post; // $_POST
+        $this->get; // $_GET
+        $this->server; // $_SERVER
+        $this->db; // $wpdb
+        $this->shortcut; // The current Shortcut object
+    }
+
+}
+
+```
+
 ### Shortcut Api
 
 You can use `$this` or `$plugin` when your in the `app.php` file.
