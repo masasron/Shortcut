@@ -13,10 +13,14 @@ Start by coping the `demo` folder to the `/wp-content/plugins/` directory.
 Lets take a look at the `app.php` file, in here you can register all of the plugin functionality.
 We also have two folders `controllers` where all of your plugins controllers will be. and `views` where all of your plugin views will be.
 
+### Creating a Controller
+When creating a controller you need to extends the base controller named Controller.
+You can see an example for a controller on `demo/controllers/TestController.php`
+
 ### Shortcut Api
 
 You can use `$this` or `$plugin` when your in the `app.php` file.
-if you want to use any of the Shortcut functions when your in a controller just use the `$this->shortcut->{function}`, make sure you use ```extends Controller``` on any controller you create.
+if you want to use any of the Shortcut functions when your in a controller just use the `$this->shortcut->{function}`.
 
 ##### Shortcode
 
