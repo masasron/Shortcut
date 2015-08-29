@@ -149,3 +149,25 @@ public function getPage() {
 }
 
 ```
+
+#### multiIsset
+
+Allows you to check multible cells at once
+
+```php
+
+$response = Api::request('user/1/photos');
+
+// Before
+if ( isset($response['results']) && isset($response['results']['photos']) && ... )
+
+// After
+if ( $this->multiIsset($response, ['results','photos']['url'] ){
+    // do something with $response['results']['photos']['url']
+}
+
+
+```
+
+
+
