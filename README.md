@@ -40,7 +40,7 @@ class TestContoller extends Controller {
 You can use `$this` or `$plugin` when your in the `app.php` file.
 if you want to use any of the Shortcut functions when your in a controller just use the `$this->shortcut->{function}`.
 
-##### View
+##### Views
 
 I think the biggest problem with WordPress is there is no clear separation of views and controllers.
 Usually plugins code looks like a mix of the two, the `view` command allows you to completely separate
@@ -59,7 +59,7 @@ public function getPage(){
 
 ```
 
-You can also pass varibules to the view by passing a second argement like so
+You can also pass variables to the view by passing a second argument
 
 ```php
 
