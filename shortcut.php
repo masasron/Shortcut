@@ -187,7 +187,7 @@ class Shortcut
      * @param string $template
      * @param array  $vars
      * @param array  $options
-     * @param Swift  $self
+     * @param Shortcut $self
      * @return string
      */
     public function view($template, $vars) {
