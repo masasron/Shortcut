@@ -11,3 +11,71 @@ Object oriented WordPress development.
 
 Start by coping the `demo` folder to the `/wp-content/plugins/` directory.
 Lets take a look at the `app.php` file, in here you can register all of the plugin functionality.
+We also have two folders `controllers` where all of your plugins controllers will be. and `views` where all of your plugin views will be.
+
+### Shortcut Api
+
+##### Shortcode
+
+```php
+
+// Link shortcode to a method on TestController
+$this->shortcode('testing', 'TestController@shortcode');
+
+$this->shortcode('testing', function (){
+  return 'shortcode output.';
+});
+
+```
+
+
+##### Ajax
+
+```php
+
+$this->ajax('test','TestController@firstTest');
+
+$this->ajax('test',function (array $request) {
+    return array(
+      'testing' => true,
+      'request' => $request // post & get request array
+    );
+});
+
+```
+
+##### Page
+Add a WordPress page
+
+```php
+
+$this->page(array(
+    'title' => 'Plugin Settings',
+    'parent' => 'options-general',
+    'request.get' => 'TestController@getPage', // Runs on a get request to the page
+    'request.post' => 'TestController@postPage' // Runs on a post request to the page
+));
+
+```
+
+##### Adding a filter
+
+```php
+
+$this->filter('body_class',function ($classes){
+    return array_merge($classes,['injected_class']);
+});
+
+```
+
+##### Adding an action
+
+```php
+
+$this->action('template_redirect',function (){
+    // ...
+});
+
+```
+
+
