@@ -190,7 +190,7 @@ public function getPage() {
 
 ##### multiIsset
 
-Allows you to check multible cells at once
+Allows you to check multible cells in an array at once
 
 `$array` any array
 `$children` an array of potential cells
