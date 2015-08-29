@@ -17,18 +17,18 @@ class Shortcut
     private $path;
 
     /**
-     * @param array $dependencies
      * @param string $path
+     * @param array $dependencies
      * @return Shortcut
      */
-    public function __construct($dependencies = false, $path = '') {
+    public function __construct($path = '', $dependencies = false) {
         /**
          * @ver string
          */
         $this->path = $path;
 
         if ($dependencies) {
-            $this->requireAllOnce($dependencies, $path);
+            $this->requireAllOnce($dependencies, dirname($path));
         }
 
         return $this;
@@ -98,34 +98,37 @@ class Shortcut
 
     /**
      * Add menu item to wordpress settings and bind get/post to controllers.
-     * @param string $title
-     * @param mixed $getController
-     * @param mixed $postController
-     * @param mixed $parent
-     * @param mixed $capability
+     * @param array $args
      * @return Shortcut
      */
-    public function page($title, $getController, $postController, $parent = false, $capability = 'manage_options') {
-        $args = [$title, $this->fetchCallback($getController), $this->fetchCallback($postController), $capability, $parent];
+    public function page($args) {
+
+        if (!isset($args['parent'])) {
+            $args['parent'] = false;
+        }
+
+        if (!isset($args['capability'])) {
+            $args['capability'] = 'manage_options';
+        }
 
         add_action('admin_menu', function() use($args) {
 
             /**
              * @ver string
              */
-            $slug = sanitize_title($args[0]);
+            $slug = sanitize_title($args['title']);
 
             if (getenv('REQUEST_METHOD') === 'POST' && filter_input(INPUT_GET, 'page') === $slug) {
-                $this->invoke($args[2], filter_input_array(INPUT_POST));
+                $this->invoke($this->fetchCallback($args['request.post']), filter_input_array(INPUT_POST));
             }
 
-            if (!$args[4]) {
-                add_menu_page($args[0], $args[0], $args[3], $slug, function() use ($args) {
-                    print($args[1]());
+            if (!$args['parent']) {
+                add_menu_page($args['title'], $args['title'], $args['capability'], $slug, function () use ($args) {
+                    print($this->invoke($this->fetchCallback($args['request.get'])));
                 });
             } else {
-                add_submenu_page($args[4] . '.php', $args[0], $args[0], $args[3], $slug, function() use ($args) {
-                    print($args[1]());
+                add_submenu_page($args['parent'] . '.php', $args['title'], $args['title'], $args['capability'], $slug, function() use ($args) {
+                    print($this->invoke($this->fetchCallback($args['request.get'])));
                 });
             }
         });
@@ -139,8 +142,8 @@ class Shortcut
      * @param mixed $callback
      * @return Swift
      */
-    public function activation($file, $callback) {
-        register_activation_hook($file, $this->fetchCallback($callback));
+    public function activated($callback) {
+        register_activation_hook($this->path, $this->fetchCallback($callback));
         return $this;
     }
 
@@ -180,7 +183,7 @@ class Shortcut
         /**
          * @ver string
          */
-        $path = $this->path . '/views/' . $template . '.php';
+        $path = dirname($this->path) . '/views/' . $template . '.php';
 
         if (file_exists($path)) {
             ob_start();
@@ -199,19 +202,22 @@ class Shortcut
      * Create a new ajax action for privilege and none privilege users, action will be bind to a controller
      * @param string $action
      * @param mixed $controller
+     * @param bool $onlyAdmin
      * @return Shortcut
      */
-    public function ajax($action, $controller) {
+    public function ajax($action, $controller, $onlyAdmin = false) {
         $self = $this;
-        $request = array_merge(filter_input_array(INPUT_GET), filter_input_array(INPUT_POST));
+        $request = array_merge($_GET, $_POST);
 
         $this->action(sprintf('wp_ajax_%s', $action), function() use ($controller, $request, $self) {
             return wp_send_json($self->invoke($self->fetchCallback($controller), $request));
         }, $self);
 
-        $this->action(sprintf('wp_ajax_nopriv_%s', $action), function() use ($controller, $request, $self) {
-            return wp_send_json($self->invoke($self->fetchCallback($controller), $request));
-        }, $self);
+        if (!$onlyAdmin) {
+            $this->action(sprintf('wp_ajax_nopriv_%s', $action), function() use ($controller, $request, $self) {
+                return wp_send_json($self->invoke($self->fetchCallback($controller), $request));
+            }, $self);
+        }
 
         return $this;
     }
@@ -248,25 +254,13 @@ class Shortcut
     }
 
     /**
-     * Invoke a function
-     * @param mixed $args
-     * @param mixed $params
-     * @return mixed
-     */
-    private function invoke($args, $params = array()) {
-        if (is_callable($args)) {
-            return call_user_func($args, $params);
-        } elseif (is_array($args)) {
-            return call_user_method_array($args[1], $args[0], $params);
-        }
-    }
-
-    /**
      * Require once using file patterns
      * @param mixed $patterns
+     * @param string $path
      * @return void
      */
-    private function requireAllOnce($patterns, $path) {
+    public function requireAllOnce($patterns, $path) {
+
         if (!is_array($patterns)) {
             $patterns = array($patterns);
         }
@@ -280,6 +274,20 @@ class Shortcut
             foreach ($files as $file) {
                 require_once $file;
             }
+        }
+    }
+
+    /**
+     * Invoke a function
+     * @param mixed $args
+     * @param mixed $params
+     * @return mixed
+     */
+    private function invoke($args, $params = array()) {
+        if (is_callable($args)) {
+            return call_user_func($args, $params);
+        } elseif (is_array($args)) {
+            return call_user_method_array($args[1], $args[0], $params);
         }
     }
 
