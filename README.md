@@ -147,6 +147,28 @@ public function templateRedirect(){
 }
 ```
 
+##### Displaying a notice
+Sometimes you need to display an erorr or sucuess notice to the user after some action.
+You can do this by using the `$this->shortcut->notice` function.
+
+```php
+
+//TestController.php
+
+public function postPage() {
+    // ...
+    $whitelist = ['website_public','website_secret'];
+    $this->shortcut->updateOptions($this->post,$whitelist);
+    $this->shortcut->notice('Saved.');
+    // You can also do
+    $this->shortcut->notice('Error.');
+    // Or
+    $this->shortcut->updateOptions($this->post,$whitelist)->notice('Saved.');
+    // ...
+}
+
+```
+
 ### Helpers
 
 ##### updateOptions
