@@ -149,7 +149,7 @@ public function templateRedirect(){
 
 ##### Displaying a notice
 Sometimes you need to display an error or success notice to the user after some action.
-You can do this by using the $this->shortcut->notice function.
+You can do this by using the `$this->shortcut->notice` function.
 
 ```php
 
