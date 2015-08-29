@@ -76,7 +76,7 @@ public function getPage(){
 ```
 
 
-##### Shortcode
+##### Adding shortcodes
 
 ```php
 // Link shortcode to a method on TestController
