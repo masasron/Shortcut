@@ -49,23 +49,20 @@ I think the biggest problem with WordPress is there is no clear separation of vi
 Usually plugins code looks like a mix of the two, the `view` command allows you to completely separate
 the two in a clean and readable way.
 
-You can create a view just create a new file in your plugin `views` folder.
+You can create a view just add a new file to your plugin `views` folder.
 To render a view from a controller just use the `$this->view` method and pass the file name without the `.php`
 
 ```php
-
 public function getPage(){
     
     return $this->view('settings');
 
 }
-
 ```
 
 You can also pass variables to the view by passing a second argument
 
 ```php
-
 public function getPage(){
 
     $title = 'Hello World';
@@ -75,16 +72,16 @@ public function getPage(){
     return $this->view('settings',compact('title','options'));
     
 }
-
 ```
 
 
 ##### Adding shortcodes
 
 ```php
-// Link shortcode to a method on TestController
+// Link shortcode to the `shortcode` method on TestController
 $this->shortcode('testing', 'TestController@shortcode');
 
+// You can also use a function
 $this->shortcode('testing', function (){
   return 'shortcode output.';
 });
@@ -92,10 +89,13 @@ $this->shortcode('testing', function (){
 
 
 ##### Using ajax
+the return value will be converted to a json response.
 
 ```php
+// Link to the `firstTest` method on TestController
 $this->ajax('test','TestController@firstTest');
 
+// You can also use a function
 $this->ajax('test',function (array $request) {
     return array(
       'testing' => true,
