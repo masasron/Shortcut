@@ -30,7 +30,7 @@ class Shortcut
      * @param string $path
      * @return Shortcut
      */
-    public static function plugin($path = '') {
+    public static function make($path = '') {
         return new static($path);
     }
 
