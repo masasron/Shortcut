@@ -263,6 +263,19 @@ class Shortcut
         add_action($name, $this->fetchCallback($callback));
         return $this;
     }
+    
+    /**
+     * Add actions shortcut
+     * @param array $actions
+     * @param mixed $callback
+     * @return Shortcut
+     */  
+    public function bind(array $actions,$callback) {
+        foreach($actions as $name) {
+            $this->action($name,$callback);
+        }
+        return $this;
+    }
 
     /**
      * Require once using file patterns
@@ -271,9 +284,6 @@ class Shortcut
      * @return void
      */
     public function requireAll($patterns, $path = false) {
-
-        $plugin = $this;
-
         if (!$path) {
             $path = dirname($this->path);
         }
