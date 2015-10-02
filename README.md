@@ -230,7 +230,7 @@ $response = Api::request('user/1/photos');
 if ( isset($response['results']) && isset($response['results']['photos']) && ... )
 
 // After
-if ( $this->multiIsset($response, ['results','photos','url']) ){
+if ( $this->shortcut->multiIsset($response, ['results','photos','url']) ){
     // do something with $response['results']['photos']['url']
 }
 
