@@ -19,4 +19,4 @@ $files = array(
     'app.php'
 );
 
-Shortcut::plugin(__FILE__)->requireAll($files);
+Shortcut::make(__FILE__)->requireAll($files);
