@@ -157,6 +157,17 @@ class Shortcut
         register_deactivation_hook($this->path, $this->fetchCallback($callback));
         return $this;
     }
+    
+    /**
+     * Register plugin uninstall hook
+     * @param string $file
+     * @param mixed $callback
+     * @return Shortcut
+     */
+    public function uninstall($callback) {
+        register_uninstall_hook($this->path,$this->fetchCallback($callback));
+        return $this;
+    }
 
     /**
      * Add filter wrapper
