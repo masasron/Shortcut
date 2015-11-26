@@ -9,6 +9,7 @@ Object oriented WordPress development.
 ### Plugins using Shortcut
 
 [Simple reCaptcha](https://github.com/masasron/Simple-reCaptcha)
+[Anti Tor](https://github.com/masasron/Anti-tor)
 
 ### Working with Shortcut
 
